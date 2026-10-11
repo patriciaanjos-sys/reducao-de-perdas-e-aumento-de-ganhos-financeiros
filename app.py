@@ -1,5 +1,6 @@
 import streamlit as st
 import google.generativeai as genai
+import requests
 
 # 1. Configurações da Página
 st.set_page_config(page_title="Diagnóstico Especializado", page_icon="📊")
@@ -70,10 +71,34 @@ FORMATAÇÃO DA RESPOSTA:
 - Use Markdown limpo para estruturar o texto (títulos com ###, destaques em **negrito** e listas em tópicos -).
 - NÃO utilize código HTML direto na resposta.
 
-ESTRUTURA DO DIAGNÓSTICO:
+ESTRUTURA DA ANÁLISE:
 ### Análise Individual das Respostas
 (Para CADA UMA das 5 respostas, busque no PDF o insight correspondente e explique).
 
-### Diagnóstico Geral e Próximos Passos
+# --- ENVIAR PARA O GOOGLE SHEETS ---
+                URL_PLANILHA = "https://script.google.com/macros/s/AKfycbzHe7DlbyQrEo8C53FeqM1aSGwMmUaJI2xYIdkkE0MzUBjSsv7AzOV1yAsuz6qCVCJKdw/exec"
+                
+                dados = {
+                    "nome": nome,
+                    "email": email,
+                    "telefone": telefone,
+                    "resp1": resp1,
+                    "resp2": resp2,
+                    "resp3": resp3,
+                    "resp4": resp4,
+                    "resp5": resp5,
+                    "analise": resposta.text
+                }
+                
+                try:
+                    requests.post(URL_PLANILHA, json=dados)
+                except:
+                    pass # Garante que o usuário veja a resposta mesmo se a planilha falhar
+                
+                st.success(f"Pronto, {nome}! Aqui está a sua análise:")
+                st.markdown(resposta.text)
+
+
+### Análise Geral e Próximos Passos
 (Juntando as 5 respostas, explique o cenário atual do usuário, os impactos e o próximo passo recomendado).
 """
