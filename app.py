@@ -7,13 +7,12 @@ st.set_page_config(page_title="Avaliação Especializada", page_icon="📊")
 st.title("Formulário de Avaliação Online")
 
 # 2. Conecta ao cofre seguro do Streamlit para pegar a chave
-# A chave não fica no código para não vazar!
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 
-# 3. Função para carregar o PDF na memória (cache para ser rápido)
+# 3. Função para carregar o PDF na memória
 @st.cache_resource
 def carregar_material_base():
-    # Substitua "Contexto de dados e pesquisas - Energia Tempo e dinheiro.pdf" pelo nome exato do seu arquivo PDF
+    # Certifique-se de que o PDF tem EXATAMENTE este nome no GitHub
     arquivo = genai.upload_file("Contexto de dados e pesquisas - Energia Tempo e dinheiro.pdf")
     return arquivo
 
@@ -24,7 +23,7 @@ nome = st.text_input("Qual é o seu nome?")
 email = st.text_input("Qual é o seu e-mail?")
 telefone = st.text_input("Qual é o seu telefone / WhatsApp?")
 
-# Adapte as perguntas e as alternativas de acordo com o seu negócio
+# As 5 perguntas
 resp1 = st.radio("1. O que mais te incomoda no dia a dia hoje?", 
                  ["Dependência em mim para fazer tudo", "Erros recorrentes e retrabalho", "Falta de processos e perdas financeiras", "Riscos regulatórios"])
 
@@ -43,17 +42,16 @@ resp5 = st.radio("5. Quanto você estima que tem de perdas com essa situação?"
 # 5. Botão que aciona a Inteligência Artificial
 if st.button("Obter Análise Agora"):
     
-    if nome == "":
-        st.warning("Por favor, preencha o seu nome antes de continuar.")
+    if nome == "" or email == "" or telefone == "":
+        st.warning("Por favor, preencha seu nome, e-mail e telefone antes de continuar.")
     else:
-        # Mostra um ícone de carregamento enquanto a IA "pensa"
         with st.spinner("Analisando suas respostas cruzando com nossa base de conhecimento..."):
             try:
                 # Carrega o PDF e o Modelo
                 pdf_arquivo = carregar_material_base()
                 modelo = genai.GenerativeModel("gemini-1.5-flash")
                 
-                # O Prompt com as instruções
+                # O Prompt com as instruções (FECHADO CORRETAMENTE AQUI)
                 prompt = f"""
                 Você é um consultor especialista e analítico. Em anexo (PDF), está meu material de referência.
                 
@@ -67,15 +65,22 @@ if st.button("Obter Análise Agora"):
 
                 Sua tarefa é cruzar essas respostas com o material do PDF e montar um relatório estruturado.
 
-FORMATAÇÃO DA RESPOSTA:
-- Use Markdown limpo para estruturar o texto (títulos com ###, destaques em **negrito** e listas em tópicos -).
-- NÃO utilize código HTML direto na resposta.
+                FORMATAÇÃO DA RESPOSTA:
+                - Use Markdown limpo para estruturar o texto (títulos com ###, destaques em **negrito** e listas em tópicos -).
+                - NÃO utilize código HTML direto na resposta.
 
-ESTRUTURA DA ANÁLISE:
-### Análise Individual das Respostas
-(Para CADA UMA das 5 respostas, busque no PDF o insight correspondente e explique).
+                ESTRUTURA DA ANÁLISE:
+                ### Análise Individual das Respostas
+                (Para CADA UMA das 5 respostas, busque no PDF o insight correspondente e explique).
 
-# --- ENVIAR PARA O GOOGLE SHEETS ---
+                ### Análise Geral e Próximos Passos
+                (Juntando as 5 respostas, explique o cenário atual do usuário, os impactos e o próximo passo recomendado).
+                """
+                
+                # CHAMA A IA PARA GERAR A RESPOSTA
+                resposta = modelo.generate_content([pdf_arquivo, prompt])
+                
+                # --- ENVIAR PARA O GOOGLE SHEETS ---
                 URL_PLANILHA = "https://script.google.com/macros/s/AKfycbzHe7DlbyQrEo8C53FeqM1aSGwMmUaJI2xYIdkkE0MzUBjSsv7AzOV1yAsuz6qCVCJKdw/exec"
                 
                 dados = {
@@ -95,10 +100,9 @@ ESTRUTURA DA ANÁLISE:
                 except:
                     pass # Garante que o usuário veja a resposta mesmo se a planilha falhar
                 
+                # EXIBE NA TELA PARA O USUÁRIO
                 st.success(f"Pronto, {nome}! Aqui está a sua análise:")
                 st.markdown(resposta.text)
-
-
-### Análise Geral e Próximos Passos
-(Juntando as 5 respostas, explique o cenário atual do usuário, os impactos e o próximo passo recomendado).
-"""
+                
+            except Exception as e:
+                st.error(f"Ocorreu um erro ao processar: {e}")
