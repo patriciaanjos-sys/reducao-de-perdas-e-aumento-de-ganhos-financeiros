@@ -3,8 +3,8 @@ import google.generativeai as genai
 import requests
 
 # 1. Configurações da Página
-st.set_page_config(page_title="Diagnóstico Especializado", page_icon="📊")
-st.title("Formulário de Diagnóstico em Tempo Real")
+st.set_page_config(page_title="Avaliação Especializada", page_icon="📊")
+st.title("Formulário de Avaliação Online")
 
 # 2. Conecta ao cofre seguro do Streamlit para pegar a chave
 # A chave não fica no código para não vazar!
