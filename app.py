@@ -81,7 +81,7 @@ if st.button("Obter Análise Agora"):
                 resposta = modelo.generate_content([pdf_arquivo, prompt])
                 
                 # --- ENVIAR PARA O GOOGLE SHEETS ---
-                URL_PLANILHA = "https://script.google.com/macros/s/AKfycbzHe7DlbyQrEo8C53FeqM1aSGwMmUaJI2xYIdkkE0MzUBjSsv7AzOV1yAsuz6qCVCJKdw/exec"
+                URL_PLANILHA = "https://script.google.com/macros/s/AKfycbwRhtvpb8YYmafslE02GYoxBT1VltO4Sp3wNNb4vfqgzz1EZZxT-FX36QBQrnbqPrQySA/exec"
                 
                 dados = {
                     "nome": nome,
