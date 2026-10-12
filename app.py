@@ -4,7 +4,7 @@ import requests
 
 # 1. Configurações da Página
 st.set_page_config(page_title="Avaliação Especializada", page_icon="📊")
-st.title("Formulário de Avaliação Online")
+st.title("Formulário de Análise Online")
 
 # 2. Conecta ao cofre seguro do Streamlit para pegar a chave
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
