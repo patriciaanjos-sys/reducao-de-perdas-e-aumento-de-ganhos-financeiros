@@ -12,7 +12,7 @@ col1, col2 = st.columns([1, 4])
 with col1:
     # Substitua "logo.png" pelo nome exato do arquivo que você subiu no GitHub
     # Se não quiser logo por enquanto, pode apagar esta linha do st.image
-    st.image("logo", width=120) 
+    st.image("logo.png", width=120) 
 
 with col2:
     st.title("Formulário de Análise Online")
