@@ -9,7 +9,7 @@ st.set_page_config(page_title="Avaliação Especializada", page_icon="📊")
 
 # Exibe a imagem grande (Ajuste o número do width para deixar maior ou menor. 
 # Se quiser que ocupe a largura toda da tela, troque width=400 por use_container_width=True)
-st.image("logo.png", width=400) 
+st.image("logo.png", width=1200) 
 
 # Título e Subtítulo logo abaixo
 st.title("Formulário de Análise Online")
