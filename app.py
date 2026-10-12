@@ -71,11 +71,8 @@ if st.button("Obter Análise Agora"):
                 - NÃO utilize código HTML direto na resposta.
 
                 ESTRUTURA DA ANÁLISE:
-                ### Análise Individual das Respostas
-                (Para CADA UMA das 5 respostas, busque no PDF o insight correspondente e explique).
-
                 ### Análise Geral e Próximos Passos
-                (Juntando as 5 respostas, explique o cenário atual do usuário, os impactos e o próximo passo recomendado).
+                (Juntando as 5 respostas,  busque no PDF os insights e explique o cenário atual do usuário, os impactos e o próximo passo recomendado).
                 """
                 
                 # 3. CHAMA A IA PARA GERAR A RESPOSTA (Nova sintaxe e feita apenas uma vez)
