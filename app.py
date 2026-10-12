@@ -1,20 +1,20 @@
-import streamlit as st
 from google import genai
+import streamlit as st
 import requests
+
+# 1. Nova forma de autenticar (usando Client)
+chave_api = str(st.secrets["GEMINI_API_KEY"]).strip()
+client = genai.Client(api_key=chave_api)
 
 # Inicializar o cliente com a nova biblioteca
 client = genai.Client(api_key=str(st.secrets["GEMINI_API_KEY"]).strip())
 
 # Ler a chave diretamente dos Secrets
 api_key = st.secrets["GEMINI_API_KEY"]
-genai.configure(api_key=api_key)
 
-# 1. Configurações da Página
+# 2. Configurações da Página
 st.set_page_config(page_title="Avaliação Especializada", page_icon="📊")
 st.title("Formulário de Análise Online")
-
-# 2. Conecta ao cofre seguro do Streamlit para pegar a chave
-genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 
 # 3. Função para carregar o PDF na memória
 @st.cache_resource
