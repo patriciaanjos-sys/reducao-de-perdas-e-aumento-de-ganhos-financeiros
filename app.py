@@ -49,7 +49,7 @@ if st.button("Obter Análise Agora"):
             try:
                 # Carrega o PDF e o Modelo
                 pdf_arquivo = carregar_material_base()
-                modelo = genai.GenerativeModel("gemini-1.5-flash")
+                modelo = genai.GenerativeModel("gemini-2.0-flash")
                 
                 # O Prompt com as instruções (FECHADO CORRETAMENTE AQUI)
                 prompt = f"""
