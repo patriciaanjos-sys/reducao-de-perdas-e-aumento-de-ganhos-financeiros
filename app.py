@@ -13,7 +13,7 @@ st.image("logo.png", width=400)
 
 # Título e Subtítulo logo abaixo
 st.title("Formulário de Análise Online")
-    st.markdown("**IMPACTO Soluções Estratégicas** | *Transformando desafios em resultados.*")
+st.markdown("**IMPACTO Soluções Estratégicas** | *Transformando desafios em resultados.*")
 
 st.markdown("---") # Linha divisória para separar o cabeçalho do formulário
 # ----------------------
