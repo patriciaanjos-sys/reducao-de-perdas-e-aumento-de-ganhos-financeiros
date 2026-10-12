@@ -57,10 +57,10 @@ if st.button("Obter Análise Agora"):
                 # Carrega o PDF e o Modelo
                 pdf_arquivo = carregar_material_base()
                 response = client.models.generate_content(
-                model="gemini-1.5-flash",
-                contents=prompt
+    model="gemini-1.5-flash",
+    contents=[pdf_arquivo, prompt]
 )
-                analise = response.text
+analise = response.text
                 
                 # O Prompt com as instruções (FECHADO CORRETAMENTE AQUI)
                 prompt = f"""
