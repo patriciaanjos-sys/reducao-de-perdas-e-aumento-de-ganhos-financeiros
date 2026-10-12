@@ -80,7 +80,7 @@ if st.button("Obter Análise Agora"):
                 
                 # 3. CHAMA A IA PARA GERAR A RESPOSTA (Nova sintaxe e feita apenas uma vez)
                 response = client.models.generate_content(
-                    model="gemini-1.5-flash",
+                    model="gemini-3.8-flash",
                     contents=[pdf_arquivo, prompt]
                 )
                 analise = response.text
