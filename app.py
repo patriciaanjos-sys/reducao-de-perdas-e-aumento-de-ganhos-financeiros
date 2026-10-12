@@ -5,17 +5,14 @@ import requests
 # 1. Configurações da Página (Deve ser sempre o primeiro comando do Streamlit)
 st.set_page_config(page_title="Avaliação Especializada", page_icon="📊")
 st.title("Formulário de Análise Online")
-# --- NOVO CABEÇALHO ---
-# Cria duas colunas: uma estreita (para o logo) e uma larga (para os textos)
-col1, col2 = st.columns([1, 4]) 
+# --- CABEÇALHO (LOGO GRANDE + TÍTULO ABAIXO) ---
 
-with col1:
-    # Substitua "logo.png" pelo nome exato do arquivo que você subiu no GitHub
-    # Se não quiser logo por enquanto, pode apagar esta linha do st.image
-    st.image("logo.png", width=120) 
+# Exibe a imagem grande (Ajuste o número do width para deixar maior ou menor. 
+# Se quiser que ocupe a largura toda da tela, troque width=400 por use_container_width=True)
+st.image("logo.png", width=400) 
 
-with col2:
-    st.title("Formulário de Análise Online")
+# Título e Subtítulo logo abaixo
+st.title("Formulário de Análise Online")
     st.markdown("**IMPACTO Soluções Estratégicas** | *Transformando desafios em resultados.*")
 
 st.markdown("---") # Linha divisória para separar o cabeçalho do formulário
