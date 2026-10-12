@@ -1,6 +1,6 @@
-streamlit
-google-generativeai>=0.8.3
-requests
+import streamlit as st
+import google.generativeai as genai
+import requests
 
 # 1. Configurações da Página
 st.set_page_config(page_title="Avaliação Especializada", page_icon="📊")
