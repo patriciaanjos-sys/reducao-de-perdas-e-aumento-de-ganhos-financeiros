@@ -102,9 +102,13 @@ if st.button("Obter Análise Agora"):
                 except:
                     pass # Garante que o usuário veja a resposta mesmo se a planilha falhar
                 
-                # EXIBE NA TELA PARA O USUÁRIO
+               # EXIBE NA TELA PARA O USUÁRIO
                 st.success(f"Pronto, {nome}! Aqui está a sua análise:")
                 st.markdown(analise)
+                
+                # --- MENSAGEM FINAL ADICIONADA AQUI ---
+                st.markdown("---") # Cria uma linha horizontal para separar o relatório da mensagem
+                st.info("Espero ter contribuído para melhorar sua rotina e a qualidade do dia a dia na sua empresa! Saiba que estamos à disposição para auxiliar a sua empresa nesse e em outros desafios!")
                 
             except Exception as e:
                 st.error(f"Ocorreu um erro ao processar: {e}")
