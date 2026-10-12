@@ -1,26 +1,21 @@
-from google import genai
 import streamlit as st
+from google import genai
 import requests
 
-# 1. Nova forma de autenticar (usando Client)
-chave_api = str(st.secrets["GEMINI_API_KEY"]).strip()
-client = genai.Client(api_key=chave_api)
-
-# Inicializar o cliente com a nova biblioteca
-client = genai.Client(api_key=str(st.secrets["GEMINI_API_KEY"]).strip())
-
-# Ler a chave diretamente dos Secrets
-api_key = st.secrets["GEMINI_API_KEY"]
-
-# 2. Configurações da Página
+# 1. Configurações da Página (Deve ser sempre o primeiro comando do Streamlit)
 st.set_page_config(page_title="Avaliação Especializada", page_icon="📊")
 st.title("Formulário de Análise Online")
+
+# 2. Inicializar o cliente de forma única com a nova biblioteca
+chave_api = str(st.secrets["GEMINI_API_KEY"]).strip()
+client = genai.Client(api_key=chave_api)
 
 # 3. Função para carregar o PDF na memória
 @st.cache_resource
 def carregar_material_base():
     # Certifique-se de que o PDF tem EXATAMENTE este nome no GitHub
-    arquivo = genai.upload_file("Contexto de dados e pesquisas - Energia Tempo e dinheiro.pdf")
+    # Utilizando a nova sintaxe da biblioteca google-genai
+    arquivo = client.files.upload(file="Contexto de dados e pesquisas - Energia Tempo e dinheiro.pdf")
     return arquivo
 
 # 4. Interface do Formulário
@@ -54,15 +49,10 @@ if st.button("Obter Análise Agora"):
     else:
         with st.spinner("Analisando suas respostas cruzando com nossa base de conhecimento..."):
             try:
-                # Carrega o PDF e o Modelo
+                # 1. Carrega o PDF
                 pdf_arquivo = carregar_material_base()
-                response = client.models.generate_content(
-    model="gemini-1.5-flash",
-    contents=[pdf_arquivo, prompt]
-)
-analise = response.text
                 
-                # O Prompt com as instruções (FECHADO CORRETAMENTE AQUI)
+                # 2. Monta o Prompt com as instruções (TEM DE VIR ANTES DA CHAMADA DA IA)
                 prompt = f"""
                 Você é um consultor especialista e analítico. Em anexo (PDF), está meu material de referência.
                 
@@ -88,8 +78,12 @@ analise = response.text
                 (Juntando as 5 respostas, explique o cenário atual do usuário, os impactos e o próximo passo recomendado).
                 """
                 
-                # CHAMA A IA PARA GERAR A RESPOSTA
-                resposta = client.models.generate_content([pdf_arquivo, prompt])
+                # 3. CHAMA A IA PARA GERAR A RESPOSTA (Nova sintaxe e feita apenas uma vez)
+                response = client.models.generate_content(
+                    model="gemini-1.5-flash",
+                    contents=[pdf_arquivo, prompt]
+                )
+                analise = response.text
                 
                 # --- ENVIAR PARA O GOOGLE SHEETS ---
                 URL_PLANILHA = "https://script.google.com/macros/s/AKfycbwRhtvpb8YYmafslE02GYoxBT1VltO4Sp3wNNb4vfqgzz1EZZxT-FX36QBQrnbqPrQySA/exec"
@@ -103,7 +97,7 @@ analise = response.text
                     "resp3": resp3,
                     "resp4": resp4,
                     "resp5": resp5,
-                    "analise": resposta.text
+                    "analise": analise
                 }
                 
                 try:
@@ -113,7 +107,7 @@ analise = response.text
                 
                 # EXIBE NA TELA PARA O USUÁRIO
                 st.success(f"Pronto, {nome}! Aqui está a sua análise:")
-                st.markdown(resposta.text)
+                st.markdown(analise)
                 
             except Exception as e:
                 st.error(f"Ocorreu um erro ao processar: {e}")
