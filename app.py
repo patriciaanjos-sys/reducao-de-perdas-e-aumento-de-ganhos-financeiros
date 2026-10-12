@@ -12,6 +12,7 @@ st.title("Formulário de Análise Online")
 
 # 2. Conecta ao cofre seguro do Streamlit para pegar a chave
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+st.write("Tamanho da chave lida:", len(st.secrets.get("GEMINI_API_KEY", "")))
 
 # 3. Função para carregar o PDF na memória
 @st.cache_resource
