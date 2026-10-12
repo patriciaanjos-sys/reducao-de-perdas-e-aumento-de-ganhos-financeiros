@@ -1,6 +1,9 @@
 import streamlit as st
-import google.generativeai as genai
+from google import genai
 import requests
+
+# Inicializar o cliente com a nova biblioteca
+client = genai.Client(api_key=str(st.secrets["GEMINI_API_KEY"]).strip())
 
 # Ler a chave diretamente dos Secrets
 api_key = st.secrets["GEMINI_API_KEY"]
@@ -53,8 +56,11 @@ if st.button("Obter Análise Agora"):
             try:
                 # Carrega o PDF e o Modelo
                 pdf_arquivo = carregar_material_base()
-                modelo = genai.GenerativeModel("gemini-1.5-flash")
-                resposta = modelo.generate_content(prompt)
+                response = client.models.generate_content(
+                model="gemini-1.5-flash",
+                contents=prompt
+)
+                analise = response.text
                 
                 # O Prompt com as instruções (FECHADO CORRETAMENTE AQUI)
                 prompt = f"""
