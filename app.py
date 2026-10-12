@@ -89,7 +89,7 @@ if st.button("Obter Análise Agora"):
                 """
                 
                 # CHAMA A IA PARA GERAR A RESPOSTA
-                resposta = modelo.generate_content([pdf_arquivo, prompt])
+                resposta = client.models.generate_content([pdf_arquivo, prompt])
                 
                 # --- ENVIAR PARA O GOOGLE SHEETS ---
                 URL_PLANILHA = "https://script.google.com/macros/s/AKfycbwRhtvpb8YYmafslE02GYoxBT1VltO4Sp3wNNb4vfqgzz1EZZxT-FX36QBQrnbqPrQySA/exec"
