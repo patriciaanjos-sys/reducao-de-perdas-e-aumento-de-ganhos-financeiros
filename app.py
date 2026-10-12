@@ -5,6 +5,21 @@ import requests
 # 1. Configurações da Página (Deve ser sempre o primeiro comando do Streamlit)
 st.set_page_config(page_title="Avaliação Especializada", page_icon="📊")
 st.title("Formulário de Análise Online")
+# --- NOVO CABEÇALHO ---
+# Cria duas colunas: uma estreita (para o logo) e uma larga (para os textos)
+col1, col2 = st.columns([1, 4]) 
+
+with col1:
+    # Substitua "logo.png" pelo nome exato do arquivo que você subiu no GitHub
+    # Se não quiser logo por enquanto, pode apagar esta linha do st.image
+    st.image("Soluções Estratégicas_setembro 2026_fundo transparente.png", width=120) 
+
+with col2:
+    st.title("Formulário de Análise Online")
+    st.markdown("**IMPACTO Soluções Estratégicas** | *Transformando desafios em resultados.*")
+
+st.markdown("---") # Linha divisória para separar o cabeçalho do formulário
+# ----------------------
 
 # 2. Inicializar o cliente de forma única com a nova biblioteca
 chave_api = str(st.secrets["GEMINI_API_KEY"]).strip()
@@ -112,3 +127,14 @@ if st.button("Obter Análise Agora"):
                 
             except Exception as e:
                 st.error(f"Ocorreu um erro ao processar: {e}")
+
+# --- NOVO RODAPÉ ---
+st.markdown("---") # Linha divisória do rodapé
+rodape = """
+<div style="text-align: center; color: gold; font-size: 14px;">
+    <p><b>IMPACTO Soluções Estratégicas</b> © 2026<br>
+    📧 patricia.anjos@impacto-esg.com.br | 📱 (51) 99378-7887<br>
+    <i>Canoas / RS</i></p>
+</div>
+"""
+st.markdown(rodape, unsafe_allow_html=True)
