@@ -51,7 +51,7 @@ resp4 = st.radio("4. Você já possui algum projeto para fazer alguma adequaçã
                  ["Não, mas tenho orçamento", "Não e não tenho orçamento", "Sim, está em andamento", "Sim, mas não foi iniciado"])
 
 resp5 = st.radio("5. Quanto você estima que tem de perdas com essa situação?", 
-                 ["Não imagino", "Entre R$1k e R$10k", "Entre R$10k e R$50k", "Acima de R$50k"])
+                 ["Não imagino", "Entre 1k e 10k reais", "Entre 10k e 50k reais", "Acima de 50k reais"])
 
 # 5. Botão que aciona a Inteligência Artificial
 if st.button("Obter Análise Agora"):
