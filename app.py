@@ -4,7 +4,7 @@ import requests
 
 # 1. Configurações da Página (Deve ser sempre o primeiro comando do Streamlit)
 st.set_page_config(page_title="Avaliação Especializada", page_icon="📊")
-st.title("Formulário de Análise Online")
+
 # --- CABEÇALHO (LOGO GRANDE + TÍTULO ABAIXO) ---
 
 # Exibe a imagem grande (Ajuste o número do width para deixar maior ou menor. 
