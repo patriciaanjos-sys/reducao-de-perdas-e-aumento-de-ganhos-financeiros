@@ -2,6 +2,10 @@ import streamlit as st
 import google.generativeai as genai
 import requests
 
+# Ler a chave diretamente dos Secrets
+api_key = st.secrets["GEMINI_API_KEY"]
+genai.configure(api_key=api_key)
+
 # 1. Configurações da Página
 st.set_page_config(page_title="Avaliação Especializada", page_icon="📊")
 st.title("Formulário de Análise Online")
